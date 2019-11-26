@@ -3,7 +3,7 @@ package config;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import pages.Welcome;
+import pages.Home;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,8 +15,8 @@ public class WebAutomation {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        Welcome welcome = new Welcome(driver);
-        welcome.NavigateHomePage();
+        Home home = new Home(driver);
+        home.NavigateHomePage();
 
         driver.close();
     }

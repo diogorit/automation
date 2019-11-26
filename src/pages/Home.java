@@ -2,10 +2,10 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 
-public class Welcome {
+public class Home {
     WebDriver driver;
 
-    public Welcome(WebDriver driver) {
+    public Home(WebDriver driver) {
         this.driver = driver;
     }
 
