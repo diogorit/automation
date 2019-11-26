@@ -12,6 +12,7 @@ public class Regist {
         By email = By.xpath("//div[@class='input-container']/input");
         By next = By.xpath("//form[@name='registerForm']//button[contains(text(), 'Next')]");
 By username = By.xpath("//input[@name='firstlastname']");
+By phone = By.xpath("//internacional-phone-number//input");
     public Regist(WebDriver driver) {
         this.driver = driver;
     }
@@ -33,6 +34,7 @@ By username = By.xpath("//input[@name='firstlastname']");
 
     public void fieldRegist(int radom){
         driver.findElement(username).sendKeys("gest"+ " qa");
+        driver.findElement(phone).sendKeys("911234567");
     }
 
 }
