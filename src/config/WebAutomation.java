@@ -4,7 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import pages.Home;
+import pages.Regist;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class WebAutomation {
@@ -17,8 +19,16 @@ public class WebAutomation {
 
         Home home = new Home(driver);
         home.NavigateHomePage();
+        home.clickUntilHome();
 
-        driver.close();
+        Regist regist = new Regist(driver);
+        regist.selectCurrency("US Dollars");
+        regist.goRegist();
+        Random randomgen = new Random();
+        int random = randomgen.nextInt();
+        regist.insertMail(random);
+
+        //driver.close();
     }
 
     public static WebDriver openBrowser(String browser) {
