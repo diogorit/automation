@@ -27,7 +27,7 @@ public class WebAutomation {
         Random randomgen = new Random();
         int random = randomgen.nextInt();
         regist.insertMail(random);
-
+        regist.fieldRegist(random);
         //driver.close();
     }
 
