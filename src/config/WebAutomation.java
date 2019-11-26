@@ -28,7 +28,8 @@ public class WebAutomation {
         int random = randomgen.nextInt();
         regist.insertMail(random);
         regist.fieldRegist(random);
-        //driver.close();
+        regist.validateRegister();
+        driver.close();
     }
 
     public static WebDriver openBrowser(String browser) {
