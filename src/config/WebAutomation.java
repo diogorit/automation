@@ -13,6 +13,9 @@ public class WebAutomation {
     public static WebDriver driver;
 
     public static void main(String[] args) {
+        Random randomgen = new Random();
+        int random = randomgen.nextInt();
+
         driver = openBrowser("Chrome");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -24,11 +27,9 @@ public class WebAutomation {
         Regist regist = new Regist(driver);
         regist.selectCurrency("US Dollars");
         regist.goRegist();
-        Random randomgen = new Random();
-        int random = randomgen.nextInt();
         regist.insertMail(random);
         regist.fieldRegist(random);
-        regist.validateRegister();
+
         driver.close();
     }
 

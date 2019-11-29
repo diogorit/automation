@@ -3,22 +3,24 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Regist {
     WebDriver driver;
 
-    By dropdown = By.xpath("//div[@class='currencySelBox']/span");
-    By singIn = By.xpath("//div[@class='loginPanel']/ul/li/button");
-    By regist = By.xpath("//div[@class='loginPanel']/ul/li//div[@class='user-txt']//strong[contains(text(), 'Register')]");
-    By email = By.xpath("//div[@class='input-container']/input");
-    By next = By.xpath("//form[@name='registerForm']//button[contains(text(), 'Next')]");
-    By username = By.xpath("//input[@name='firstlastname']");
-    By phone = By.xpath("//internacional-phone-number//input");
-    By password = By.xpath("//input[@name='signup_password']");
-    By select_terms = By.xpath("//div[@class='registerCheck']//label");
-    By bregist = By.xpath("//button[@class='submitButton']");
-    By done = By.xpath("//button[@class='doneButton']");
-    By firstName = By.xpath("//div[@class='userPanel']//strong");
+    private By dropdown = By.xpath("//div[@class='currencySelBox']/span");
+    private By singIn = By.xpath("//div[@class='loginPanel']/ul/li/button");
+    private By regist = By.xpath("//div[@class='loginPanel']/ul/li//div[@class='user-txt']//strong[contains(text(), 'Register')]");
+    private By email = By.xpath("//div[@class='input-container']/input");
+    private By next = By.xpath("//form[@name='registerForm']//button[contains(text(), 'Next')]");
+    private By username = By.xpath("//input[@name='firstlastname']");
+    private By phone = By.xpath("//international-phone-number[@name = 'mobileNumber']//input");
+    private By password = By.xpath("//input[@name='signup_password']");
+    private By select_terms = By.xpath("//div[@class='registerCheck']//label");
+    private By bregist = By.xpath("//button[@class='submitButton']");
+    private By done = By.xpath("//button[@class='doneButton']");
+    private By firstName = By.xpath("//div[@class='userPanel']//strong");
 
     public Regist(WebDriver driver) {
         this.driver = driver;
@@ -30,7 +32,7 @@ public class Regist {
     }
 
     public void goRegist() {
-        driver.findElement(singIn).click();
+        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(singIn)).click();
         driver.findElement(regist).click();
     }
 
@@ -40,19 +42,29 @@ public class Regist {
     }
 
     public void fieldRegist(int random) {
-        driver.findElement(username).sendKeys("gest" + " qa");
-        driver.findElement(phone).sendKeys("911234567");
-        driver.findElement(password).sendKeys("Username" + random);
-        driver.findElement(select_terms).click();
+        WebElement userInput = driver.findElement(username);
+        retryToInput(userInput, "Guest QA");
+        WebElement phoneInput = driver.findElement(phone);
+        retryToInput(phoneInput, "+351911234567");
+        WebElement passInput = driver.findElement(password);
+        retryToInput(passInput, "Username" + random);
+        new WebDriverWait(driver, 3).until(ExpectedConditions.elementToBeClickable(select_terms)).click();
         driver.findElement(bregist).click();
     }
 
-    public void validateRegister() {
-        driver.findElement(done).click();
-
-        WebElement userDropdown = driver.findElement(firstName);
-        assert userDropdown.getText().equals("Teste") : "Registered user 'Teste' is not the same as in home page: " + userDropdown.getText();
-        assert driver.getCurrentUrl().equals("https://staging.engineer.ai/home") : "Url does not match";
+    private void retryToInput(WebElement element, String text) {
+        element.click();
+        element.clear();
+        element.sendKeys(text);
+        try {
+            new WebDriverWait(driver, 1).until(ExpectedConditions.textToBePresentInElement(element, text));
+        } catch (Exception e) {
+            System.out.println("Text in input not accordingly '" + text + "', setting again...\n");
+            element.clear();
+            element.sendKeys(text);
+        }
     }
+
+
 
 }
