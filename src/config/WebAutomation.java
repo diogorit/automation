@@ -29,7 +29,7 @@ public class WebAutomation {
         regist.goRegist();
         regist.insertMail(random);
         regist.fieldRegist(random);
-
+        regist.validateRegist();
         driver.close();
     }
 

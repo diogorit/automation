@@ -37,7 +37,7 @@ public class Regist {
     }
 
     public void insertMail(int random) {
-        driver.findElement(email).sendKeys("username" + random + "@test.com");
+        driver.findElement(email).sendKeys("guest" + random + "@test.com");
         driver.findElement(next).click();
     }
 
@@ -65,6 +65,13 @@ public class Regist {
         }
     }
 
+    public void validateRegist(){
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(done)).click();
+
+        WebElement userNameDropdown = driver.findElement(firstName);
+        assert userNameDropdown.getText().equals("Guest") : "Registered user 'Guest' is not the same as in home page: " + userNameDropdown.getText();
+        assert driver.getCurrentUrl().equals("https://staging.engineer.ai/home") : "URL doesn't match.";
+    }
 
 
 }
